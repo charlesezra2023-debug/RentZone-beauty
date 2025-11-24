@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<title>Kukodisha Nguo Za Kila Aina</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial, sans-serif; margin:0; padding:0; background: #f0f4f8; color: #000; transition:0.3s; }
+header { background-color: #1e3c72; color: white; padding: 15px; text-align: center; }
+nav { display: flex; justify-content: center; flex-wrap: wrap; margin: 10px 0; }
+nav button { margin: 5px; padding: 8px 16px; cursor: pointer; border:none; background-color:#28527a; color:white; border-radius:5px; transition:0.3s; }
+nav button:hover { background-color:#1e3c72; }
+.container { max-width: 1200px; margin: auto; padding: 20px; }
+.category { display: none; margin-bottom: 30px; opacity:0; transform:translateY(20px); transition:0.5s; }
+.category.active { display: block; opacity:1; transform:translateY(0); }
+.product { display: inline-block; width: 220px; margin: 10px; padding: 10px; background: white; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); text-align: center; transition:0.3s; }
+.product:hover { transform: scale(1.05); }
+.product img { width: 100%; border-radius: 5px; }
+form { background: #ffffff; padding: 20px; border-radius: 10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; transition:0.3s; }
+form input, form select, form textarea, form button { width: 100%; margin: 8px 0; padding: 10px; border-radius: 5px; border:1px solid #ccc; transition:0.3s; }
+form input:focus, form select:focus, form textarea:focus { border-color:#1e3c72; outline:none; }
+form button { background-color: #1e3c72; color:white; border:none; cursor:pointer; }
+form button:hover { background-color:#28527a; }
+footer { text-align: center; padding: 15px; background-color: #1e3c72; color:white; margin-top: 30px; }
+table { width:100%; border-collapse: collapse; margin-top:20px; }
+th, td { border:1px solid #ccc; padding:8px; text-align:left; }
+th { background-color:#1e3c72; color:white; }
+button.action { padding:5px 10px; margin:2px; border:none; border-radius:4px; cursor:pointer; }
+button.confirm { background-color:green; color:white; }
+button.cancel { background-color:red; color:white; }
+button.download { background-color:#28527a; color:white; border:none; padding:8px 16px; margin:10px 0; cursor:pointer; border-radius:5px; }
+.highlight { background-color: #e0ffe0 !important; transition:0.5s; }
+@media (max-width:768px){ nav { flex-direction: column; } .product{ width:45%; } }
+@media (max-width:480px){ .product{ width:100%; } }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Kukodisha Nguo Za Kila Aina</h1>
+</header>
+
+<nav id="categoryNav">
+    <button onclick="showCategory('harusi')">Mavazi ya Harusi</button>
+    <button onclick="showCategory('fashion')">Nguo za Fashion</button>
+    <button onclick="showCategory('watoto')">Nguo za Watoto</button>
+    <button onclick="showCategory('beach')">Nguo za Beach</button>
+</nav>
+
+<div class="container">
+
+    <!-- Categories -->
+    <div id="harusi" class="category">
+        <div class="product"><img src="suti.jpg" alt="Suti"><h3>Suti ya Harusi</h3></div>
+        <div class="product"><img src="shela.jpg" alt="Shela"><h3>Shela ya Harusi</h3></div>
+    </div>
+
+    <div id="fashion" class="category">
+        <div class="product"><img src="dress.jpg" alt="Dress"><h3>Dress ya Party</h3></div>
+        <div class="product"><img src="top.jpg" alt="Top"><h3>Top Stylish</h3></div>
+    </div>
+
+    <div id="watoto" class="category">
+        <div class="product"><img src="kids1.jpg" alt="Kids"><h3>Shati ya Mtoto</h3></div>
+        <div class="product"><img src="kids2.jpg" alt="Kids"><h3>Sketi ya Mtoto</h3></div>
+    </div>
+
+    <div id="beach" class="category">
+        <div class="product"><img src="swim.jpg" alt="Swimwear"><h3>Swimwear</h3></div>
+        <div class="product"><img src="beachdress.jpg" alt="Beach Dress"><h3>Beach Dress</h3></div>
+    </div>
+
+    <!-- Booking Form -->
+    <h2 style="text-align:center; margin-top:40px;">Fomu ya Booking</h2>
+    <form id="bookingForm">
+        <input type="text" name="name" placeholder="Jina lako" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Namba ya simu" required>
+        <select name="category" required>
+            <option value="">Chagua Category</option>
+            <option value="Mavazi ya Harusi">Mavazi ya Harusi</option>
+            <option value="Nguo za Fashion">Nguo za Fashion</option>
+            <option value="Nguo za Watoto">Nguo za Watoto</option>
+            <option value="Nguo za Beach">Nguo za Beach</option>
+        </select>
+        <input type="text" name="product" placeholder="Bidhaa unayotaka" required>
+        <input type="text" name="size" placeholder="Size / Quantity" required>
+        <input type="date" name="date" required>
+        <textarea name="notes" placeholder="Maelezo maalumu (optional)"></textarea>
+        <button type="submit">Submit Booking</button>
+    </form>
+
+    <!-- Admin Panel -->
+    <h2 style="text-align:center; margin-top:50px;">Admin: Orodha ya Bookings</h2>
+    <button class="download" onclick="downloadCSV()">Download Bookings CSV</button>
+    <table id="adminTable">
+        <thead>
+            <tr>
+                <th>#</th><th>Jina</th><th>Email</th><th>Phone</th><th>Category</th><th>Product</th><th>Size</th><th>Date</th><th>Notes</th><th>Status</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<footer>
+    <p>&copy; 2025 Kukodisha Nguo Za Kila Aina</p>
+</footer>
+
+<script>
+// Show selected category
+function showCategory(cat) {
+    let categories = document.querySelectorAll('.category');
+    categories.forEach(c => c.classList.remove('active'));
+    document.getElementById(cat).classList.add('active');
+}
+
+// Load bookings from localStorage
+let allBookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+// Auto-expire bookings
+function checkExpired() {
+    let today = new Date().toISOString().split('T')[0];
+    allBookings.forEach(b=>{
+        if(b.status==='Pending' && b.date < today) b.status='Expired';
+    });
+}
+
+// Render Admin Table
+function renderAdminTable() {
+    checkExpired();
+    let tbody = document.querySelector('#adminTable tbody');
+    tbody.innerHTML = '';
+    allBookings.forEach((b,index)=>{
+        let row = document.createElement('tr');
+        row.innerHTML = `<td>${index+1}</td>
+        <td>${b.name}</td>
+        <td>${b.email}</td>
+        <td>${b.phone}</td>
+        <td>${b.category}</td>
+        <td>${b.product}</td>
+        <td>${b.size}</td>
+        <td>${b.date}</td>
+        <td>${b.notes}</td>
+        <td>${b.status}</td>
+        <td>
+            <button class="action confirm" onclick="updateStatus(${index},'Confirmed')">Confirm</button>
+            <button class="action cancel" onclick="updateStatus(${index},'Cancelled')">Cancel</button>
+        </td>`;
+        tbody.appendChild(row);
+        if(index===allBookings.length-1) row.classList.add('highlight');
+    });
+    document.querySelector('#adminTable tbody tr:last-child')?.scrollIntoView({behavior:'smooth'});
+}
+
+// Update booking status
+function updateStatus(index,status) {
+    allBookings[index].status = status;
+    saveBookings();
+    renderAdminTable();
+}
+
+// Save bookings to localStorage
+function saveBookings() {
+    localStorage.setItem('bookings', JSON.stringify(allBookings));
+}
+
+// Download CSV
+function downloadCSV() {
+    let csv = 'Jina,Email,Phone,Category,Product,Size,Date,Notes,Status\n';
+    allBookings.forEach(b=>{
+        csv += `${b.name},${b.email},${b.phone},${b.category},${b.product},${b.size},${b.date},${b.notes},${b.status}\n`;
+    });
+    let blob = new Blob([csv], {type: 'text/csv'});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'bookings.csv';
+    a.click();
+}
+
+// Handle Booking Form Submission
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    let formData = new FormData(this);
+    let booking = {};
+    formData.forEach((value,key) => booking[key] = value);
+    booking.status = 'Pending';
+    allBookings.push(booking);
+    saveBookings();
+    alert("Booking yako imesajiliwa! Tunakutumia taarifa kwa email yako.");
+    this.reset();
+    renderAdminTable();
+});
+
+// Auto-refresh table kila 10 sekunde
+setInterval(renderAdminTable,10000);
+
+// Initial render
+renderAdminTable();
+</script>
+
+</body>
+</html>
